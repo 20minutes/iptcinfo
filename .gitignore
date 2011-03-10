@@ -1,0 +1,13 @@
+.bzr/*
+.hg/*
+dist/*
+build/*
+*.py[oc]
+*.kpf
+*.jpg
+iptcinfo.state
+iptcinfo.*.*
+*.log
+MANIFEST
+*~
+test/rudolph_vogt
