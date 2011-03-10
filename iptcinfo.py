@@ -406,15 +406,13 @@ class IPTCData(dict):
 
     def __setitem__(self, name, value):
         key = self.keyAsInt(name)
-        o = super(type(self), self)
-        if key in o and isinstance(o.__getitem__(key), list):
-            #print key, c_datasets[key], o.__getitem__(key)
+        if key in self and isinstance(self.__getitem__(key), list):
             if isinstance(value, list):
-                o.__setitem__(key, value)
+                super(IPTCData, self).__setitem__(key, value)
             else:
                 raise ValueError("For %s only lists acceptable!" % name)
         else:
-            o.__setitem__(self.keyAsInt(name), value)
+            super(IPTCData, self).__setitem__(self.keyAsInt(name), value)
 
 
 def _getSetSomeList(name):
