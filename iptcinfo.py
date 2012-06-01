@@ -968,21 +968,17 @@ class IPTCInfo(object):
                         try:
                             cs = unpack('!H', temp)[0]
                         except:
-                            LOG.warn(
-                                'problems with charset recognition',
-                                repr(temp))
+                            LOG.warn('problems with charset recognition %s', repr(temp))
                             cs = None
                         if cs in self.c_charset:
                             self.inp_charset = self.c_charset[cs]
-                        LOG.info("BlindScan: found character set '%s'"
-                            " at offset %d", self.inp_charset, offset)
+                        LOG.info("BlindScan: found character set '%s' at offset %d", self.inp_charset, offset)
                     except EOFException:
                         pass
 
                 elif ord(record) == 2:
                     # found it. seek to start of this tag and return.
-                    LOG.debug("BlindScan: found IIM start at offset %d",
-                        offset)
+                    LOG.debug("BlindScan: found IIM start at offset %d", offset)
                     try:  # seek rel to current position
                         self.seekExactly(fh, -3)
                     except EOFException:
@@ -1021,8 +1017,7 @@ class IPTCInfo(object):
 
             alist = {'tag': tag, 'record': record, 'dataset': dataset,
                      'length': length}
-            LOG.debug('\n'.join('%s\t: %s' % (k, v)
-                for k, v in alist.iteritems()))
+            LOG.debug('\n'.join('%s\t: %s' % (k, v) for k, v in alist.iteritems()))
             value = fh.read(length)
 
             if self.inp_charset:
@@ -1030,8 +1025,7 @@ class IPTCInfo(object):
                     value = unicode(value, encoding=self.inp_charset,
                         errors='strict')
                 except:
-                    LOG.error('Data "%r" is not in encoding %s!',
-                        value, self.inp_charset)
+                    LOG.error('Data "%r" is not in encoding %s!', value, self.inp_charset)
                     value = unicode(value, encoding=self.inp_charset,
                         errors='replace')
 
